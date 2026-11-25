@@ -1,0 +1,4 @@
+interface:
+  display_name: "Meeting Decisions Tracker"
+  short_description: "Track meeting decisions and action items"
+  default_prompt: "Use $meeting-decisions-tracker to turn these meeting notes into decisions and action items, and link each item to the original quote."
