@@ -61,7 +61,7 @@
     const manualMinutes = readNumber(baseline.manualMinutes, 'baseline.manualMinutes');
     const hourlyCost = readNumber(baseline.hourlyCost, 'baseline.hourlyCost');
     const months = readNumber(baseline.months, 'baseline.months', { integer: true, min: 1, defaultValue: 12 });
-    const currency = baseline.currency === undefined ? 'ILS' : baseline.currency;
+    const currency = baseline.currency === undefined ? 'USD' : baseline.currency;
     if (typeof currency !== 'string' || !/^[a-z]{3}$/i.test(currency.trim())) {
       invalid('baseline.currency', 'expected_currency');
     }

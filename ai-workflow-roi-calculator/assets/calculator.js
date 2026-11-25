@@ -313,7 +313,7 @@
 
   function loadExample() {
     for (const control of form.querySelectorAll('[aria-invalid]')) clearFieldError(control);
-    const example = { monthlyVolume: 400, manualMinutes: 10, hourlyCost: 120, months: 12, currency: 'ILS' };
+    const example = { monthlyVolume: 400, manualMinutes: 10, hourlyCost: 120, months: 12, currency: 'USD' };
     for (const [name, value] of Object.entries(example)) {
       const input = form.elements.namedItem(name);
       input.value = value;

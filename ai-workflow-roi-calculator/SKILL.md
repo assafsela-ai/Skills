@@ -16,7 +16,7 @@ Ask for missing required values in one short message. Use user estimates when av
 | `baseline.monthlyVolume` | Whole tasks per month, required |
 | `baseline.manualMinutes` | Minutes of manual work per task, required |
 | `baseline.hourlyCost` | Cost per hour of human work, required |
-| `baseline.currency` | Three-letter currency code, defaults to ILS |
+| `baseline.currency` | Three-letter currency code, defaults to USD |
 | `baseline.months` | Whole months to compare, defaults to 12 |
 | `scenarios[].name` | Scenario name, required |
 | `scenarios[].modelCost` | Model cost per task, required |
