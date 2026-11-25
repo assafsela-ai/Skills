@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare five simulated extraction results across four versions of the same synthetic invoice.">
+  <title>Document Failure Lab</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./assets/demo/styles.css">
+  <script type="module" src="./assets/demo/lab.js"></script>
+</head>
+<body>
+  <header class="page-header">
+    <div class="page-width masthead">
+      <div>
+        <h1>Document Failure Lab</h1>
+        <p>Switch between four versions of one invoice to see which fields change.</p>
+      </div>
+      <a class="text-link" href="https://github.com/assafsela-ai/Skills/tree/main/document-failure-lab">View skill on GitHub</a>
+    </div>
+  </header>
+
+  <main class="page-width">
+    <p id="load-error" role="alert" hidden>The demo could not load its example results. Reload the page to try again.</p>
+    <noscript><p>Enable JavaScript to compare the four invoice versions.</p></noscript>
+
+    <div id="lab" hidden>
+      <div class="toolbar">
+        <div class="tab-list" id="variant-tabs" role="tablist" focusgroup="tablist nomemory wrap" aria-label="Invoice variants">
+          <button id="tab-clean" type="button" role="tab" aria-selected="true" focusgroupstart>Clean</button>
+          <button id="tab-stamp" type="button" role="tab" aria-selected="false" tabindex="-1">Stamp</button>
+          <button id="tab-tilt" type="button" role="tab" aria-selected="false" tabindex="-1">Tilt</button>
+          <button id="tab-blur" type="button" role="tab" aria-selected="false" tabindex="-1">Blur</button>
+        </div>
+        <p class="source-note">Simulated extraction results</p>
+      </div>
+
+      <div role="tabpanel" id="panel-clean" aria-labelledby="tab-clean"></div>
+      <div role="tabpanel" id="panel-stamp" aria-labelledby="tab-stamp" hidden></div>
+      <div role="tabpanel" id="panel-tilt" aria-labelledby="tab-tilt" hidden></div>
+      <div role="tabpanel" id="panel-blur" aria-labelledby="tab-blur" hidden></div>
+    </div>
+  </main>
+
+  <template id="inspection">
+    <div class="variant-summary">
+      <div>
+        <h2></h2>
+        <p class="finding"></p>
+      </div>
+      <p class="result-count"></p>
+    </div>
+    <div class="workspace">
+      <figure class="invoice">
+        <figcaption>
+          <span>Invoice preview</span>
+          <a class="text-link" target="_blank" rel="noopener" aria-label="Open full image in a new tab">Open full image</a>
+        </figcaption>
+        <div class="image-stage">
+          <img alt="" decoding="async">
+        </div>
+      </figure>
+
+      <div class="results">
+        <table>
+          <caption>Field comparison</caption>
+          <thead>
+            <tr>
+              <th scope="col">Field</th>
+              <th scope="col">Expected</th>
+              <th scope="col">Extracted</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </template>
+</body>
+</html>

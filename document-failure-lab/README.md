@@ -9,6 +9,8 @@ Find which invoice fields break when the image changes. Start with one synthetic
 | `tilt.png` | A 6° rotation with enough padding to keep the whole invoice |
 | `blur.png` | Blur inside one selected line |
 
+[Open the interactive demo](https://assafsela-ai.github.io/Skills/document-failure-lab/) to switch between the four images and compare the simulated results for each field.
+
 ## Install
 
 Requires Python 3.10 or later. From the **Skills** repository root, install Pillow in your Python environment.

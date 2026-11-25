@@ -7,6 +7,8 @@ description: Test how image changes affect invoice field extraction. Use when as
 
 Use a synthetic PNG or JPEG invoice. Read [the input and results format](references/run-format.md) when preparing a case file or mapping extraction output.
 
+[Open the interactive demo](https://assafsela-ai.github.io/Skills/document-failure-lab/) for a visual walkthrough of the bundled images and simulated results.
+
 ## Generate a run
 
 - For the demo, use [the bundled invoice](assets/invoice.png) and [its case file](assets/invoice-case.json).

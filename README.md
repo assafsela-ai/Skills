@@ -10,7 +10,7 @@ Reusable skills for Codex, Claude, and other tools that support Agent Skills.
 - [Meeting Decisions Tracker](meeting-decisions-tracker/) extracts decisions, tasks, and owners from meeting notes, links them to the original text, and tracks task updates across meetings.
 - [AI Workflow ROI Calculator](ai-workflow-roi-calculator/) compares automation costs, break-even volume, payback, and ROI. It includes live sliders. [Open the English calculator](https://assafsela-ai.github.io/Skills/ai-workflow-roi-calculator/).
 - [Document Review Lab](document-review-lab/) lets teams review simulated AI extraction against source lines in synthetic documents. [Open the interactive lab](https://assafsela-ai.github.io/Skills/document-review-lab/).
-- [Document Failure Lab](document-failure-lab/) creates invoice image variants and reports how extraction results change by field.
+- [Document Failure Lab](document-failure-lab/) creates invoice image variants and reports how extraction results change by field. [Open the interactive demo](https://assafsela-ai.github.io/Skills/document-failure-lab/).
 - [One Word Flips It](one-word-flips-it/) creates paired AI tests where changing one fact flips the expected policy decision.
 - [Time Zone Replay](time-zone-replay/) turns time-sensitive rules into test cases for daylight saving changes, cutoffs, and overnight windows.
 - [Agent Side-Effect Diff](agent-side-effect-diff/) compares what two agent runs changed and flags unexpected writes, even when the replies match.
