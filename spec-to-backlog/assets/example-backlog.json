@@ -1,0 +1,57 @@
+{
+  "stories": [
+    {
+      "id": "US-001",
+      "title": "Find available meeting rooms",
+      "story": "As an employee, I want to find available rooms that fit my meeting so I can choose a room to reserve.",
+      "acceptance_criteria": [
+        "The employee can search by date, time slot, and minimum capacity.",
+        "Each result shows the name and capacity of an available room.",
+        "When no room matches, a message asks the employee to change the search."
+      ],
+      "sources": [
+        {
+          "start_line": 7,
+          "end_line": 9,
+          "quote": "Employees search by date, time slot, and minimum capacity.\nResults show only available rooms and display each room's name and capacity.\nIf no room matches, the results show a message asking the employee to change the search."
+        }
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Reserve a meeting room",
+      "story": "As an employee, I want to reserve an available room so I can plan my meeting.",
+      "acceptance_criteria": [
+        "An employee can reserve a room from the search results.",
+        "A successful reservation shows the room name, date, and time slot.",
+        "If the room was just reserved by someone else, a message appears and the employee can return to the search results."
+      ],
+      "sources": [
+        {
+          "start_line": 13,
+          "end_line": 15,
+          "quote": "An employee can reserve a room from the search results.\nThe confirmation shows the room name, date, and time slot.\nIf someone else reserves the room first, the employee sees a message and can return to the results."
+        }
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Cancel my reservation",
+      "story": "As an employee, I want to cancel a room I no longer need so someone else can reserve it.",
+      "acceptance_criteria": [
+        "An employee can cancel their own reservation 30 minutes or more before the start time.",
+        "A successful cancellation makes the room available again for that time slot."
+      ],
+      "sources": [
+        {
+          "start_line": 19,
+          "end_line": 20,
+          "quote": "Employees can cancel their own reservations up to 30 minutes before the start time.\nWhen a reservation is cancelled, the room becomes available again for that time slot."
+        }
+      ]
+    }
+  ],
+  "open_questions": [
+    "For the reminder in source.md line 24, how far in advance should employees be reminded and through which channel?"
+  ]
+}
