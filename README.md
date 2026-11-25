@@ -10,3 +10,4 @@ Reusable skills for Codex, Claude, and other tools that support Agent Skills.
 - [AI Workflow ROI Calculator](ai-workflow-roi-calculator/) compares automation costs, break-even volume, payback, and ROI. It includes live sliders. [Open the English calculator](https://assafsela-ai.github.io/Skills/ai-workflow-roi-calculator/).
 - [Document Review Lab](document-review-lab/) lets teams review simulated AI extraction against source lines in synthetic documents. [Open the interactive lab](https://assafsela-ai.github.io/Skills/document-review-lab/).
 - [Document Failure Lab](document-failure-lab/) creates invoice image variants and reports how extraction results change by field.
+- [One Word Flips It](one-word-flips-it/) creates paired AI tests where changing one fact flips the expected policy decision.
