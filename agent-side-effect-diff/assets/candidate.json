@@ -1,0 +1,28 @@
+{
+  "label": "version B",
+  "reply": "I updated the delivery note on order ORD-1042.",
+  "effects": [
+    {
+      "operation": "update",
+      "resource": "orders",
+      "record_id": "ORD-1042",
+      "before": {
+        "delivery_note": ""
+      },
+      "after": {
+        "delivery_note": "Leave with reception."
+      }
+    },
+    {
+      "operation": "update",
+      "resource": "orders",
+      "record_id": "ORD-2079",
+      "before": {
+        "delivery_note": "Ring bell on arrival."
+      },
+      "after": {
+        "delivery_note": "Leave with reception."
+      }
+    }
+  ]
+}

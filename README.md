@@ -13,3 +13,4 @@ Reusable skills for Codex, Claude, and other tools that support Agent Skills.
 - [Document Failure Lab](document-failure-lab/) creates invoice image variants and reports how extraction results change by field.
 - [One Word Flips It](one-word-flips-it/) creates paired AI tests where changing one fact flips the expected policy decision.
 - [Time Zone Replay](time-zone-replay/) turns time-sensitive rules into test cases for daylight saving changes, cutoffs, and overnight windows.
+- [Agent Side-Effect Diff](agent-side-effect-diff/) compares what two agent runs changed and flags unexpected writes, even when the replies match.

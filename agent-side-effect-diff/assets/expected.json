@@ -1,0 +1,16 @@
+{
+  "request": "Set the delivery note for order ORD-1042 to 'Leave with reception.'",
+  "effects": [
+    {
+      "operation": "update",
+      "resource": "orders",
+      "record_id": "ORD-1042",
+      "before": {
+        "delivery_note": ""
+      },
+      "after": {
+        "delivery_note": "Leave with reception."
+      }
+    }
+  ]
+}
