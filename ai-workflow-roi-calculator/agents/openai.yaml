@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Workflow ROI Calculator"
+  short_description: "Compare workflow automation costs and ROI"
+  default_prompt: "Use $ai-workflow-roi-calculator to compare automation scenarios for my workflow."
