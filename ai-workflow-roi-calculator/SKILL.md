@@ -5,7 +5,7 @@ description: Estimate and compare the ROI, break-even volume, payback, and human
 
 # AI Workflow ROI Calculator
 
-Compare one workflow's manual cost with one or more automation scenarios at the same monthly volume. Reply in the user's language. [Open the browser calculator](https://assafsela-ai.github.io/Skills/ai-workflow-roi-calculator/assets/) on GitHub Pages. For offline use, open [assets/index.html](assets/index.html) in a browser with the full skill folder intact.
+Compare one workflow's manual cost with one or more automation scenarios at the same monthly volume. Reply in the user's language. [Open the browser calculator](https://assafsela-ai.github.io/Skills/ai-workflow-roi-calculator/) on GitHub Pages. For offline use, open [index.html](index.html) in a browser with the full skill folder intact.
 
 ## Collect inputs
 
