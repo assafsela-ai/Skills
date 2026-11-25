@@ -1,0 +1,38 @@
+{
+  "fields": {
+    "invoice_number": {
+      "type": "text",
+      "expected": "INV-1042"
+    },
+    "invoice_date": {
+      "type": "text",
+      "expected": "2026-11-25"
+    },
+    "supplier": {
+      "type": "text",
+      "expected": "Northline Office Supply"
+    },
+    "subtotal": {
+      "type": "amount",
+      "expected": "120.00"
+    },
+    "total_amount": {
+      "type": "amount",
+      "expected": "125.40"
+    }
+  },
+  "regions": {
+    "stamp": [
+      660,
+      688,
+      868,
+      742
+    ],
+    "blur": [
+      519,
+      188,
+      866,
+      226
+    ]
+  }
+}

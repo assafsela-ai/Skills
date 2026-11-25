@@ -1,0 +1,33 @@
+{
+  "source": "simulated",
+  "variants": {
+    "clean": {
+      "invoice_number": "INV-1042",
+      "invoice_date": "2026-11-25",
+      "supplier": "Northline Office Supply",
+      "subtotal": "120.00",
+      "total_amount": "125.40"
+    },
+    "stamp": {
+      "invoice_number": "INV-1042",
+      "invoice_date": "2026-11-25",
+      "supplier": "Northline Office Supply",
+      "subtotal": "120.00",
+      "total_amount": "120.00"
+    },
+    "tilt": {
+      "invoice_number": "INV-1042",
+      "invoice_date": "2026-11-25",
+      "supplier": "Northline Office Supply",
+      "subtotal": "120.00",
+      "total_amount": "125.40"
+    },
+    "blur": {
+      "invoice_number": "INV-1042",
+      "invoice_date": null,
+      "supplier": "Northline Office Supply",
+      "subtotal": "120.00",
+      "total_amount": "125.40"
+    }
+  }
+}
