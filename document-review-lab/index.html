@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Practice reviewing simulated AI extraction on synthetic documents.">
+  <title>Document Review Lab</title>
+  <link rel="stylesheet" href="./assets/styles.css">
+  <script type="module" src="./assets/lab.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="page-width masthead">
+      <div>
+        <h1>Document Review Lab</h1>
+        <p>Review simulated AI extraction on synthetic documents.</p>
+      </div>
+      <a class="skill-link" href="https://github.com/assafsela-ai/Skills/tree/main/document-review-lab">View skill <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main class="page-width" id="lab" hidden>
+    <div class="toolbar">
+      <nav aria-label="Sample documents">
+        <div class="document-choices" id="document-choices"></div>
+      </nav>
+      <button class="text-button reset-button" id="reset" type="button">Reset lab</button>
+    </div>
+
+    <div class="workspace">
+      <section class="document-panel" aria-labelledby="document-view-heading">
+        <div class="panel-heading">
+          <h2 id="document-view-heading">Source document</h2>
+          <button class="text-button" id="back-to-field" type="button">Go to field</button>
+        </div>
+        <article class="paper" aria-labelledby="document-title">
+          <header class="paper-header">
+            <p id="document-issuer"></p>
+            <h3 id="document-title"></h3>
+          </header>
+          <ol class="source-lines" id="source-lines" role="list" aria-label="Document lines"></ol>
+        </article>
+      </section>
+
+      <section class="review-panel" aria-labelledby="review-heading">
+        <div class="panel-heading">
+          <h2 id="review-heading">Extracted fields</h2>
+          <span class="document-progress" id="document-progress"></span>
+        </div>
+        <ul class="field-list" id="field-list" role="list" aria-label="Fields to review"></ul>
+        <form class="field-editor" id="field-editor" aria-labelledby="field-heading">
+          <div class="editor-heading">
+            <h3 id="field-heading"></h3>
+            <button class="text-button" id="find-source" type="button">Go to source</button>
+          </div>
+          <p class="original-value" id="original-value"></p>
+          <label for="review-value">Value</label>
+          <input id="review-value" type="text" autocomplete="off" aria-describedby="value-hint">
+          <p class="control-hint" id="value-hint">Copy the value as printed in the document.</p>
+          <label for="review-source">Source line</label>
+          <select id="review-source"></select>
+          <button class="primary-button" id="save-review" type="submit">Confirm field</button>
+          <p class="review-feedback" id="review-feedback" role="status"></p>
+        </form>
+      </section>
+    </div>
+
+    <section class="summary" aria-labelledby="summary-heading">
+      <div class="summary-overview">
+        <h2 id="summary-heading">Review summary</h2>
+        <dl>
+          <div><dt>Fields reviewed</dt><dd id="reviewed-count"></dd></div>
+          <div><dt>Original errors</dt><dd id="original-count"></dd></div>
+          <div><dt>Errors remaining</dt><dd id="remaining-count"></dd></div>
+        </dl>
+      </div>
+      <table aria-label="Error counts across all sample documents">
+        <thead>
+          <tr><th scope="col">Failure type</th><th scope="col">Original</th><th scope="col">Remaining</th></tr>
+        </thead>
+        <tbody id="failure-counts"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <noscript><p class="page-width">Enable JavaScript to open the lab.</p></noscript>
+</body>
+</html>
