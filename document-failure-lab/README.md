@@ -11,6 +11,18 @@ Find which invoice fields break when the image changes. Start with one synthetic
 
 [Open the interactive demo](https://assafsela-ai.github.io/Skills/document-failure-lab/) to switch between the four images and compare the simulated results for each field.
 
+## Use your own invoice in the browser
+
+[Open the invoice workspace](https://assafsela-ai.github.io/Skills/document-failure-lab/your-invoice.html). It processes files locally and needs no installation or API key.
+
+1. Choose a PNG or JPEG, up to 20 MB. Adjust the stamp and blur areas by dragging on the preview or entering their edges. Large images are resized to a longest side of 2,800 pixels before generation.
+2. Generate the four PNGs and download them from the Clean, Stamp, Tilt and Blur tabs. Run them through the same extractor with the same settings.
+3. Fill in the [browser results template](assets/demo/results-template.json). Import the JSON in the workspace. Omit a variant or use `null` if it was skipped. Use `null` or omit a field if a tested variant did not return it.
+
+By default, the Clean results are the reference. Changed or missing values are flagged when a Clean value exists for that field. Text is compared after trimming whitespace. Keep values in the same JSON type across variants. This mode shows differences from Clean.
+
+For a check against known values, include a top-level `fields` object in the results file. For example, add `"fields": {"total_amount": {"type": "amount", "expected": "125.40"}}`. The browser compares the declared fields with their expected values. Use decimal strings for amounts and use `"type": "text"` for text values. The browser accepts a results file of up to 1 MB with up to 200 fields in the comparison.
+
 ## Install
 
 Requires Python 3.10 or later. From the **Skills** repository root, install Pillow in your Python environment.

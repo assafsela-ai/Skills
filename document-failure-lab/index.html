@@ -16,7 +16,10 @@
         <h1>Document Failure Lab</h1>
         <p>Switch between four versions of one invoice to see which fields change.</p>
       </div>
-      <a class="text-link" href="https://github.com/assafsela-ai/Skills/tree/main/document-failure-lab">View skill on GitHub</a>
+      <div class="masthead-actions">
+        <a class="primary-button" href="./your-invoice.html">Use your invoice</a>
+        <a class="text-link" href="https://github.com/assafsela-ai/Skills/tree/main/document-failure-lab">View skill on GitHub</a>
+      </div>
     </div>
   </header>
 
@@ -41,41 +44,5 @@
       <div role="tabpanel" id="panel-blur" aria-labelledby="tab-blur" hidden></div>
     </div>
   </main>
-
-  <template id="inspection">
-    <div class="variant-summary">
-      <div>
-        <h2></h2>
-        <p class="finding"></p>
-      </div>
-      <p class="result-count"></p>
-    </div>
-    <div class="workspace">
-      <figure class="invoice">
-        <figcaption>
-          <span>Invoice preview</span>
-          <a class="text-link" target="_blank" rel="noopener" aria-label="Open full image in a new tab">Open full image</a>
-        </figcaption>
-        <div class="image-stage">
-          <img alt="" decoding="async">
-        </div>
-      </figure>
-
-      <div class="results">
-        <table>
-          <caption>Field comparison</caption>
-          <thead>
-            <tr>
-              <th scope="col">Field</th>
-              <th scope="col">Expected</th>
-              <th scope="col">Extracted</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </template>
 </body>
 </html>

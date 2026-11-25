@@ -1,3 +1,6 @@
+import { compareResults } from "./results.js";
+import { activateTabs, renderViewer } from "./viewer.js";
+
 const variants = {
   clean: {
     title: "Clean baseline",
@@ -29,110 +32,10 @@ const variants = {
   },
 };
 
-const fieldLabels = {
-  invoice_number: "Invoice no.",
-  invoice_date: "Invoice date",
-  supplier: "Supplier",
-  subtotal: "Subtotal",
-  total_amount: "Total due",
-};
-
 async function loadJson(path) {
   const result = await fetch(path);
   if (!result.ok) throw new Error(`Could not load ${path}: HTTP ${result.status}`);
   return result.json();
-}
-
-function fieldStatus(field, extracted) {
-  if (extracted == null || String(extracted).trim() === "") return "Missing";
-  if (typeof extracted !== "number" && typeof extracted !== "string") return "Wrong";
-  const matches = field.type === "amount"
-    ? Number(extracted) === Number(field.expected)
-    : typeof extracted === "string" && extracted.trim() === field.expected.trim();
-  return matches ? "Match" : "Wrong";
-}
-
-function makeRow(fieldId, field, value, status) {
-  const row = document.createElement("tr");
-  row.dataset.status = status.toLowerCase();
-  const heading = document.createElement("th");
-  heading.scope = "row";
-  heading.textContent = fieldLabels[fieldId];
-  row.append(heading);
-  for (const text of [field.expected, status === "Missing" ? "—" : value, status]) {
-    row.insertCell().textContent = text;
-  }
-  row.lastElementChild.className = "field-status";
-  return row;
-}
-
-function renderPanel(panel, variant, fields, values) {
-  const contents = document.getElementById("inspection").content.cloneNode(true);
-  const rows = Object.entries(fields).map(([id, field]) => ({
-    id, field, value: values[id], status: fieldStatus(field, values[id]),
-  }));
-  const matches = rows.filter((row) => row.status === "Match").length;
-  const summary = contents.querySelector(".variant-summary");
-  summary.classList.toggle("has-failure", matches !== rows.length);
-  summary.querySelector("h2").textContent = variant.title;
-  summary.querySelector(".finding").textContent = variant.note;
-  summary.querySelector(".result-count").textContent = `${matches} of ${rows.length} fields match`;
-
-  const image = contents.querySelector("img");
-  image.width = variant.size[0];
-  image.height = variant.size[1];
-  image.alt = variant.alt;
-  image.src = variant.image;
-  contents.querySelector("figure a").href = variant.image;
-  contents.querySelector("tbody").append(
-    ...rows.map(({ id, field, value, status }) => makeRow(id, field, value, status)),
-  );
-  panel.append(contents);
-}
-
-function activateTabs(tabList) {
-  const tabs = [...tabList.querySelectorAll("button")];
-  const nativeFocusGroup = Object.hasOwn(HTMLElement.prototype, "focusGroup");
-
-  function select(selected) {
-    for (const tab of tabs) {
-      const active = tab === selected;
-      tab.setAttribute("aria-selected", String(active));
-      tab.toggleAttribute("focusgroupstart", active);
-      if (nativeFocusGroup) tab.removeAttribute("tabindex");
-      else tab.tabIndex = active ? 0 : -1;
-      document.getElementById(tab.id.replace("tab-", "panel-")).hidden = !active;
-    }
-
-    const bounds = tabList.getBoundingClientRect();
-    const button = selected.getBoundingClientRect();
-    if (button.left < bounds.left || button.right > bounds.right) {
-      selected.scrollIntoView({ block: "nearest", inline: "nearest", container: "nearest" });
-    }
-  }
-
-  for (const tab of tabs) {
-    tab.addEventListener("focus", () => select(tab));
-    tab.addEventListener("click", () => select(tab));
-  }
-  tabList.addEventListener("keydown", (event) => {
-    if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-    const index = tabs.indexOf(event.target);
-    if (index < 0) return;
-    const nextByKey = {
-      Home: 0,
-      End: tabs.length - 1,
-      ...(!nativeFocusGroup && {
-        ArrowLeft: (index + tabs.length - 1) % tabs.length,
-        ArrowRight: (index + 1) % tabs.length,
-      }),
-    };
-    if (!Object.hasOwn(nextByKey, event.key)) return;
-    event.preventDefault();
-    tabs[nextByKey[event.key]].focus();
-  });
-
-  select(tabs[0]);
 }
 
 async function start() {
@@ -142,11 +45,7 @@ async function start() {
   ]);
   if (results.source !== "simulated") throw new Error("This demo expects simulated results");
 
-  for (const [id, variant] of Object.entries(variants)) {
-    const panel = document.getElementById(`panel-${id}`);
-    renderPanel(panel, variant, invoice.fields, results.variants[id]);
-  }
-  document.getElementById("lab").hidden = false;
+  renderViewer(variants, compareResults(results, invoice.fields));
   activateTabs(document.getElementById("variant-tabs"));
 }
 
