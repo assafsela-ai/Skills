@@ -12,3 +12,4 @@ Reusable skills for Codex, Claude, and other tools that support Agent Skills.
 - [Document Review Lab](document-review-lab/) lets teams review simulated AI extraction against source lines in synthetic documents. [Open the interactive lab](https://assafsela-ai.github.io/Skills/document-review-lab/).
 - [Document Failure Lab](document-failure-lab/) creates invoice image variants and reports how extraction results change by field.
 - [One Word Flips It](one-word-flips-it/) creates paired AI tests where changing one fact flips the expected policy decision.
+- [Time Zone Replay](time-zone-replay/) turns time-sensitive rules into test cases for daylight saving changes, cutoffs, and overnight windows.
