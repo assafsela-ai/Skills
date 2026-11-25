@@ -68,10 +68,10 @@ const roiChart = (() => {
     for (const month of tickMonths) {
       const align = month === months ? 'right' : month === 0 ? 'left' : 'center';
       context.textAlign = align;
-      context.fillText(month.toLocaleString('he-IL'), x(month), height - 29);
+      context.fillText(month.toLocaleString('en-US'), x(month), height - 29);
     }
     context.textAlign = 'center';
-    context.fillText('חודשים', (left + right) / 2, height - 10);
+    context.fillText('Months', (left + right) / 2, height - 10);
 
     scenarios.forEach((scenario, index) => {
       const color = colors[index % colors.length];
@@ -92,7 +92,7 @@ const roiChart = (() => {
       scenarios: result.scenarios,
       months,
       ticks: [...new Set([0, Math.round(months / 3), Math.round(2 * (months / 3)), months])],
-      tickCurrency: new Intl.NumberFormat('he-IL', {
+      tickCurrency: new Intl.NumberFormat('en-US', {
         style: 'currency', currency, notation: 'compact', maximumFractionDigits: 1
       })
     };

@@ -1,69 +1,68 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>מחשבון כדאיות לאוטומציה עם AI</title>
-  <link rel="stylesheet" href="assets/styles.css">
+  <title>AI Workflow ROI Calculator</title>
+  <link rel="stylesheet" href="assets/styles.css?v=en">
   <script src="assets/roi-engine.js" defer></script>
-  <script src="assets/chart.js" defer></script>
-  <script src="assets/calculator.js" defer></script>
+  <script src="assets/chart.js?v=en" defer></script>
+  <script src="assets/calculator.js?v=en" defer></script>
 </head>
 <body>
   <header class="masthead">
     <div class="masthead-inner">
       <div>
-        <p class="product-name" lang="en" dir="ltr">AI Workflow ROI Calculator</p>
-        <h1>מחשבון כדאיות לאוטומציה עם AI</h1>
-        <p class="intro">הזיזו את המחוונים כדי לראות איך נפח העבודה ושיעור הבדיקה משפיעים על הכדאיות.</p>
+        <h1>AI Workflow ROI Calculator</h1>
+        <p class="intro">Move the sliders to see how workload and review rates affect costs and savings.</p>
       </div>
       <div class="header-actions">
-        <button type="button" class="example-button" id="load-example">טעינת נתוני דוגמה</button>
-        <button type="button" class="text-button" id="clear-form">טופס ריק</button>
+        <button type="button" class="example-button" id="load-example">Load example</button>
+        <button type="button" class="text-button" id="clear-form">Clear form</button>
       </div>
     </div>
   </header>
 
   <main class="workspace">
-    <noscript><p class="notice">יש להפעיל JavaScript בדפדפן כדי להשתמש במחשבון.</p></noscript>
+    <noscript><p class="notice">Enable JavaScript in your browser to use the calculator.</p></noscript>
     <p id="status" class="visually-hidden" role="status"></p>
     <a id="mobile-summary" class="mobile-summary" href="#results-title" hidden>
       <span id="mobile-summary-label"></span>
       <strong><bdi id="mobile-summary-value"></bdi></strong>
     </a>
     <form id="calculator" aria-labelledby="input-title">
-      <h2 id="input-title">נתוני ההשוואה</h2>
+      <h2 id="input-title">Inputs</h2>
       <fieldset class="baseline">
-        <legend>בסיס ההשוואה · עבודה ידנית</legend>
-        <p class="field-note">כל הנתונים בסעיף זה משותפים לכל התרחישים.</p>
+        <legend>Manual work baseline</legend>
+        <p class="field-note">These inputs apply to every scenario.</p>
         <div class="fields">
           <div class="range-field">
             <div class="range-field-heading">
-              <label id="monthly-volume-label" for="monthly-volume">משימות בחודש</label>
+              <label id="monthly-volume-label" for="monthly-volume">Tasks per month</label>
               <input id="monthly-volume" name="monthlyVolume" type="number" inputmode="numeric" min="0" step="1" required>
             </div>
             <input type="range" id="monthly-volume-range" min="0" max="2000" step="1" value="0"
                    data-range-for="monthly-volume" data-initial-max="2000" aria-labelledby="monthly-volume-label">
           </div>
           <div>
-            <label for="manual-minutes">דקות טיפול למשימה</label>
+            <label for="manual-minutes">Manual minutes per task</label>
             <input id="manual-minutes" name="manualMinutes" type="number" inputmode="decimal" min="0" step="any" required>
           </div>
           <div>
-            <label for="hourly-cost">עלות שעת עבודה</label>
+            <label for="hourly-cost">Labor cost per hour</label>
             <input id="hourly-cost" name="hourlyCost" type="number" inputmode="decimal" min="0" step="any" required>
           </div>
           <div>
-            <label for="months">תקופה בחודשים</label>
+            <label for="months">Comparison period (months)</label>
             <input id="months" name="months" type="number" inputmode="numeric" min="1" step="1" value="12" required>
           </div>
           <div>
-            <label for="currency">מטבע</label>
+            <label for="currency">Currency</label>
             <select id="currency" name="currency">
-              <option value="ILS">שקל (ILS)</option>
-              <option value="USD">דולר (USD)</option>
-              <option value="EUR">אירו (EUR)</option>
-              <option value="GBP">ליש״ט (GBP)</option>
+              <option value="ILS">Israeli shekel (ILS)</option>
+              <option value="USD">US dollar (USD)</option>
+              <option value="EUR">Euro (EUR)</option>
+              <option value="GBP">British pound (GBP)</option>
             </select>
           </div>
         </div>
@@ -71,25 +70,25 @@
 
       <section class="scenario-section" aria-labelledby="scenarios-title">
         <div class="section-heading">
-          <h3 id="scenarios-title">תרחישי אוטומציה</h3>
-          <button type="button" class="text-button" id="add-scenario">+ הוספת תרחיש</button>
+          <h3 id="scenarios-title">Automation scenarios</h3>
+          <button type="button" class="text-button" id="add-scenario">+ Add scenario</button>
         </div>
         <div id="scenarios"></div>
       </section>
 
       <div class="form-actions">
-        <button type="submit" class="primary-button">חישוב והשוואה</button>
+        <button type="submit" class="primary-button">Show results</button>
         <p class="form-error" id="form-error" tabindex="-1" hidden></p>
       </div>
     </form>
 
     <section class="results" aria-labelledby="results-title">
       <div class="section-heading results-heading">
-        <h2 id="results-title" tabindex="-1">תוצאות ההשוואה</h2>
-        <span id="sample-indicator" class="example-tag" hidden>מבוסס על נתוני דוגמה</span>
+        <h2 id="results-title" tabindex="-1">Results</h2>
+        <span id="sample-indicator" class="example-tag" hidden>Example data</span>
       </div>
-      <p id="empty-result" class="empty-result">התוצאות יופיעו כשתשלימו את הנתונים.</p>
-      <p id="stale-result" class="notice" hidden>מוצגות התוצאות האחרונות. השלימו או תקנו את הנתונים כדי לעדכן אותן.</p>
+      <p id="empty-result" class="empty-result">Fill in the inputs to see the results.</p>
+      <p id="stale-result" class="notice" hidden>These are the last calculated results. Complete or correct the inputs to update them.</p>
 
       <div id="result-body" hidden>
         <div class="decision">
@@ -97,15 +96,15 @@
           <p class="decision-value"><bdi id="decision-value"></bdi></p>
           <p class="decision-heading" id="decision-heading"></p>
           <dl class="decision-stats">
-            <div><dt>חיסכון חודשי בתרחיש המוביל</dt><dd><bdi id="decision-monthly"></bdi></dd></div>
-            <div><dt>ROI בתרחיש המוביל</dt><dd><bdi id="decision-roi"></bdi></dd></div>
+            <div><dt>Monthly savings for the best scenario</dt><dd><bdi id="decision-monthly"></bdi></dd></div>
+            <div><dt>ROI for the best scenario</dt><dd><bdi id="decision-roi"></bdi></dd></div>
           </dl>
         </div>
 
         <figure class="chart">
           <figcaption>
-            <h3>חיסכון מצטבר לעומת עבודה ידנית</h3>
-            <p class="field-note">חודש 0 מציג את עלות ההקמה. קו האפס מסמן עלות זהה לעבודה ידנית.</p>
+            <h3>Cumulative savings compared with manual work</h3>
+            <p class="field-note">Month 0 shows the setup cost. At the zero line, both options cost the same.</p>
           </figcaption>
           <canvas id="cumulative-chart" aria-hidden="true"></canvas>
           <ul id="chart-legend" class="chart-legend" role="list"></ul>
@@ -113,12 +112,12 @@
 
         <div id="comparison-scroll" class="table-scroll" role="region" aria-labelledby="comparison-title" tabindex="0">
           <table id="comparison-table">
-            <caption id="comparison-title">השוואה לפי מדד</caption>
+            <caption id="comparison-title">Scenario comparison</caption>
             <thead id="comparison-head"></thead>
             <tbody id="comparison-body"></tbody>
           </table>
         </div>
-        <p class="assumptions">החישוב מניח נפח חודשי קבוע ועלות שעה זהה לטיפול ידני ולבדיקה. החיסכון הכספי כולל את שווי שעות העבודה שמתפנות.</p>
+        <p class="assumptions">The calculator assumes the same workload each month and the same hourly cost for manual work and review. Savings include the value of staff time freed up.</p>
       </div>
     </section>
   </main>
@@ -128,31 +127,31 @@
       <legend></legend>
       <div class="fields">
         <div class="scenario-name">
-          <label>שם התרחיש</label>
+          <label>Scenario name</label>
           <input name="name" type="text" required>
         </div>
-        <button type="button" class="remove-scenario text-button">הסרה</button>
+        <button type="button" class="remove-scenario text-button">Remove</button>
         <div>
-          <label>עלות מודל למשימה</label>
+          <label>Model cost per task</label>
           <input name="modelCost" type="number" inputmode="decimal" min="0" step="any" required>
         </div>
         <div>
-          <label>דקות למשימה שנבדקת</label>
+          <label>Minutes per reviewed task</label>
           <input name="reviewMinutes" type="number" inputmode="decimal" min="0" step="any" required>
         </div>
         <div class="range-field">
           <div class="range-field-heading">
-            <label>שיעור משימות שנבדקות (%)</label>
+            <label>Tasks reviewed (%)</label>
             <input name="reviewPercent" type="number" inputmode="decimal" min="0" max="100" step="any" value="100">
           </div>
           <input type="range" min="0" max="100" step="any" value="100" data-range-for="reviewPercent">
         </div>
         <div>
-          <label>עלות תפעול חודשית</label>
+          <label>Monthly operating cost</label>
           <input name="monthlyCost" type="number" inputmode="decimal" min="0" step="any" value="0">
         </div>
         <div>
-          <label>עלות הקמה חד־פעמית</label>
+          <label>One-time setup cost</label>
           <input name="setupCost" type="number" inputmode="decimal" min="0" step="any" value="0">
         </div>
       </div>

@@ -14,10 +14,10 @@
   const mobileSummary = document.querySelector('#mobile-summary');
   const tableHead = document.querySelector('#comparison-head');
   const tableBody = document.querySelector('#comparison-body');
-  const integer = new Intl.NumberFormat('he-IL');
-  const decimal = new Intl.NumberFormat('he-IL', { maximumFractionDigits: 2 });
-  const percent = new Intl.NumberFormat('he-IL', { style: 'percent', maximumFractionDigits: 1 });
-  const nameList = new Intl.ListFormat('he-IL');
+  const integer = new Intl.NumberFormat('en-US');
+  const decimal = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 });
+  const percent = new Intl.NumberFormat('en-US', { style: 'percent', maximumFractionDigits: 1 });
+  const nameList = new Intl.ListFormat('en-US');
   let nextId = 0;
   let exampleLoaded = false;
   let pendingUpdate = 0;
@@ -25,15 +25,15 @@
   function markResultsStale() {
     if (resultBody.hidden) return;
     staleResult.hidden = false;
-    document.querySelector('#mobile-summary-label').textContent = 'תוצאה קודמת';
+    document.querySelector('#mobile-summary-label').textContent = 'Previous result';
   }
 
   function paintRange(range) {
     const value = range.valueAsNumber;
     range.style.setProperty('--range-progress', `${100 * (value / Number(range.max))}%`);
     range.setAttribute('aria-valuetext', range.dataset.initialMax
-      ? `${integer.format(value)} משימות בחודש`
-      : `${decimal.format(value)} אחוזים`);
+      ? `${integer.format(value)} ${value === 1 ? 'task' : 'tasks'} per month`
+      : `${decimal.format(value)} percent`);
   }
 
   function syncRangeFromNumber(range) {
@@ -50,11 +50,11 @@
   function renumberScenarios() {
     const scenarios = Array.from(scenarioList.children);
     scenarios.forEach((scenario, index) => {
-      const title = `תרחיש ${index + 1}`;
+      const title = `Scenario ${index + 1}`;
       scenario.querySelector('legend').textContent = title;
       const removeButton = scenario.querySelector('.remove-scenario');
       removeButton.hidden = scenarios.length === 1;
-      removeButton.setAttribute('aria-label', `הסרה של ${title}`);
+      removeButton.setAttribute('aria-label', `Remove ${title}`);
     });
   }
 
@@ -77,8 +77,8 @@
     if (!name.value) {
       const existing = new Set(Array.from(scenarioList.querySelectorAll('[name="name"]'), input => input.value.trim()));
       let number = scenarioList.children.length + 1;
-      while (existing.has(`תרחיש ${number}`)) number += 1;
-      name.value = `תרחיש ${number}`;
+      while (existing.has(`Scenario ${number}`)) number += 1;
+      name.value = `Scenario ${number}`;
     }
     scenarioList.append(scenario);
     syncRangeFromNumber(range);
@@ -102,7 +102,7 @@
     control.setAttribute('aria-describedby', hint.id);
     control.after(hint);
     control.focus();
-    status.textContent = 'יש לתקן את השדה המסומן.';
+    status.textContent = 'Correct the highlighted field.';
   }
 
   function readFields(container, path, controls) {
@@ -119,13 +119,13 @@
   }
 
   function validationMessage(error, control) {
-    if (control.validity.badInput) return 'יש להזין מספר תקין.';
-    if (error.code === 'required') return control.type === 'text' ? 'יש להזין שם לתרחיש.' : 'יש למלא את השדה.';
-    if (error.code === 'expected_integer') return 'יש להזין מספר שלם בטווח הנתמך.';
-    if (control.name === 'reviewPercent') return 'יש להזין אחוז בין 0 ל־100.';
-    if (control.name === 'months') return 'יש להזין לפחות חודש אחד.';
-    if (error.code === 'result_out_of_range') return 'התוצאה גדולה מדי. יש לבדוק את הערך שהוזן.';
-    return 'יש להזין מספר גדול מאפס או שווה לו.';
+    if (control.validity.badInput) return 'Enter a valid number.';
+    if (error.code === 'required') return control.type === 'text' ? 'Enter a name for this scenario.' : 'Fill in this field.';
+    if (error.code === 'expected_integer') return 'Enter a whole number within the allowed range.';
+    if (control.name === 'reviewPercent') return 'Enter a percentage from 0 to 100.';
+    if (control.name === 'months') return 'Enter at least one month.';
+    if (error.code === 'result_out_of_range') return 'This value produces a result that is too large. Enter a smaller value.';
+    return 'Enter zero or a positive number.';
   }
 
   function addCell(row, tag, value, scope) {
@@ -137,38 +137,42 @@
     row.append(cell);
   }
 
+  function formatPeriod(months) {
+    return `${integer.format(months)} ${months === 1 ? 'month' : 'months'}`;
+  }
+
   function renderTable(result, money) {
     const { baseline, scenarios } = result;
     const heading = document.createElement('tr');
-    for (const name of ['מדד', 'עבודה ידנית', ...scenarios.map(scenario => scenario.name)]) {
+    for (const name of ['Metric', 'Manual work', ...scenarios.map(scenario => scenario.name)]) {
       addCell(heading, 'th', name, 'col');
     }
     tableHead.replaceChildren(heading);
 
     function breakEvenLabel({ status, tasksPerMonth }) {
-      if (status === 'equal') return 'שוויון בכל נפח';
-      if (status === 'unreachable') return 'אין נקודת איזון';
-      if (tasksPerMonth === 0) return 'בכל נפח חיובי';
+      if (status === 'equal') return 'Same cost at any volume';
+      if (status === 'unreachable') return 'No break-even point';
+      if (tasksPerMonth === 0) return 'Any positive volume';
       return integer.format(tasksPerMonth);
     }
 
     function paybackLabel({ status, months }) {
-      if (status === 'no_setup_cost') return 'אין עלות הקמה';
-      if (status === 'unreachable') return 'אין החזר';
-      if (months < 0.01) return 'פחות מ־0.01';
+      if (status === 'no_setup_cost') return 'No setup cost';
+      if (status === 'unreachable') return 'No payback';
+      if (months < 0.01) return 'Less than 0.01';
       return decimal.format(months);
     }
 
     const metrics = [
-      ['עלות חודשית', money(baseline.manualMonthlyCost), scenario => money(scenario.automationMonthlyCost)],
-      ['חיסכון חודשי', money(0), scenario => money(scenario.monthlySavings)],
-      ['שעות שמתפנות בחודש', '0', scenario => decimal.format(scenario.monthlyHoursSaved)],
-      ['נקודת איזון (משימות בחודש)', '—', scenario => breakEvenLabel(scenario.operatingBreakEven)],
-      ['זמן החזר (חודשים)', '—', scenario => paybackLabel(scenario.payback)],
-      ['חיסכון מצטבר בחודש 0', money(0), scenario => money(-scenario.setupCost)],
-      [`עלות כוללת ל־${integer.format(baseline.months)} חודשים`, money(baseline.manualPeriodCost), scenario => money(scenario.automationPeriodCost)],
-      [`חיסכון אחרי ${integer.format(baseline.months)} חודשים`, money(0), scenario => money(scenario.periodSavings), 'period-total'],
-      ['ROI לתקופה', '—', scenario => scenario.roiPercent === null ? 'לא מוגדר (עלות אפס)' : percent.format(scenario.roiPercent / 100)]
+      ['Monthly cost', money(baseline.manualMonthlyCost), scenario => money(scenario.automationMonthlyCost)],
+      ['Monthly savings', money(0), scenario => money(scenario.monthlySavings)],
+      ['Hours saved per month', '0', scenario => decimal.format(scenario.monthlyHoursSaved)],
+      ['Break-even (tasks per month)', '—', scenario => breakEvenLabel(scenario.operatingBreakEven)],
+      ['Payback (months)', '—', scenario => paybackLabel(scenario.payback)],
+      ['Cumulative savings at month 0', money(0), scenario => money(-scenario.setupCost)],
+      [`Total cost over ${formatPeriod(baseline.months)}`, money(baseline.manualPeriodCost), scenario => money(scenario.automationPeriodCost)],
+      [`Savings after ${formatPeriod(baseline.months)}`, money(0), scenario => money(scenario.periodSavings), 'period-total'],
+      ['ROI for the period', '—', scenario => scenario.roiPercent === null ? 'Undefined (zero cost)' : percent.format(scenario.roiPercent / 100)]
     ];
 
     tableBody.replaceChildren(...metrics.map(([title, manual, getValue, className]) => {
@@ -188,26 +192,26 @@
     const heading = document.querySelector('#decision-heading');
     const leading = best[0];
     const amount = money(leading.periodSavings);
-    const metric = leading.periodSavings < 0 ? 'הפסד' : 'חיסכון';
-    const period = integer.format(result.baseline.months);
-    document.querySelector('#decision-metric').textContent = `${metric} אחרי ${period} חודשים, כולל הקמה`;
+    const metric = leading.periodSavings < 0 ? 'Loss' : 'Savings';
+    const period = formatPeriod(result.baseline.months);
+    document.querySelector('#decision-metric').textContent = `${metric} after ${period}, including setup`;
     document.querySelector('#decision-value').textContent = amount;
     document.querySelector('#decision-monthly').textContent = money(leading.monthlySavings);
-    document.querySelector('#decision-roi').textContent = leading.roiPercent === null ? 'לא מוגדר' : percent.format(leading.roiPercent / 100);
-    document.querySelector('#mobile-summary-label').textContent = `${metric} אחרי ${period} חודשים`;
+    document.querySelector('#decision-roi').textContent = leading.roiPercent === null ? 'Undefined' : percent.format(leading.roiPercent / 100);
+    document.querySelector('#mobile-summary-label').textContent = `${metric} after ${period}`;
     document.querySelector('#mobile-summary-value').textContent = amount;
 
     if (comparison.status === 'manual_cheaper') {
-      heading.textContent = `עבודה ידנית זולה יותר מתרחיש האוטומציה המוביל (${names}).`;
+      heading.textContent = `Manual work costs less than the best automation option (${names}).`;
     } else if (comparison.status === 'tied_with_manual') {
-      heading.textContent = `עלות זהה לעבודה ידנית: ${names}.`;
+      heading.textContent = `Manual work and ${names} cost the same.`;
     } else {
-      heading.textContent = `החיסכון הגבוה ביותר: ${names}.`;
+      heading.textContent = `Most savings with ${names}.`;
     }
   }
 
   function render(result) {
-    const formatter = new Intl.NumberFormat('he-IL', { style: 'currency', currency: result.baseline.currency });
+    const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: result.baseline.currency });
     const money = value => formatter.format(value === 0 ? 0 : value);
     renderDecision(result, money);
     renderTable(result, money);
@@ -244,8 +248,8 @@
         showFieldError(control, validationMessage(error, control));
       } else {
         formError.textContent = error.code === 'result_out_of_range'
-          ? 'אחת התוצאות גדולה מדי. יש לבדוק את סדר הגודל של הערכים בתרחישים.'
-          : 'החישוב נכשל. יש לבדוק את הנתונים ולנסות שוב.';
+          ? 'A result is too large to calculate. Check the values in your scenarios.'
+          : 'The calculation failed. Check the inputs and try again.';
         formError.hidden = false;
         formError.focus();
       }
@@ -316,10 +320,10 @@
     }
     scenarioList.replaceChildren();
     addScenario({
-      name: 'בדיקה מלאה', modelCost: 1, reviewMinutes: 3, monthlyCost: 1300, setupCost: 3900
+      name: 'Full review', modelCost: 1, reviewMinutes: 3, monthlyCost: 1300, setupCost: 3900
     });
     addScenario({
-      name: 'בדיקה מדגמית', modelCost: 1, reviewMinutes: 3, reviewPercent: 40, monthlyCost: 2000, setupCost: 7500
+      name: 'Sample review', modelCost: 1, reviewMinutes: 3, reviewPercent: 40, monthlyCost: 2000, setupCost: 7500
     });
     exampleLoaded = true;
     syncRangeFromNumber(document.querySelector('#monthly-volume-range'));
@@ -344,7 +348,7 @@
     staleResult.hidden = true;
     mobileSummary.hidden = true;
     document.querySelector('#empty-result').hidden = false;
-    status.textContent = 'הטופס אופס.';
+    status.textContent = 'Form cleared.';
     document.querySelector('#monthly-volume').focus();
   });
 

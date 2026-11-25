@@ -36,14 +36,6 @@ button, input, select { min-block-size: 48px; }
   gap: 1rem 2rem;
   padding-block: clamp(1.2rem, 3vw, 2rem);
 }
-.product-name {
-  inline-size: fit-content;
-  margin-block-end: .4rem;
-  color: var(--accent);
-  font-size: .88rem;
-  font-weight: 750;
-  letter-spacing: .02em;
-}
 .intro { margin-block-start: .65rem; color: var(--muted); }
 .workspace {
   display: grid;
@@ -80,7 +72,7 @@ input, select {
   color: var(--ink);
   font-size: max(1rem, 1em);
 }
-input[type="number"] { direction: ltr; text-align: right; font-variant-numeric: tabular-nums; }
+input[type="number"] { text-align: start; font-variant-numeric: tabular-nums; }
 .range-field { grid-column: 1 / -1; min-inline-size: 0; }
 .range-field-heading { display: flex; justify-content: space-between; align-items: center; gap: .6rem; }
 .range-field-heading input { inline-size: clamp(6rem, 30%, 9rem); margin: 0; color: var(--accent); font-weight: 700; }
@@ -103,7 +95,7 @@ input[type="range"] {
 input[type="range"]::-webkit-slider-runnable-track {
   block-size: var(--track-size);
   border-radius: 999px;
-  background: linear-gradient(to left, var(--fill) var(--range-progress), var(--track) var(--range-progress));
+  background: linear-gradient(to right, var(--fill) var(--range-progress), var(--track) var(--range-progress));
 }
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
