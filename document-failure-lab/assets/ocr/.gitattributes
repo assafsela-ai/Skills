@@ -1,0 +1,4 @@
+*.min.js -text -diff
+*.wasm.js -text -diff
+*.traineddata.gz -text -diff
+Tesseract-Core-LICENSE.txt whitespace=-blank-at-eof

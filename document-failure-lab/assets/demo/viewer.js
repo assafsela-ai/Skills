@@ -38,8 +38,14 @@ function makeRow({ label, reference, extracted, status }) {
   heading.scope = "row";
   heading.textContent = label;
   row.append(heading);
-  for (const text of [reference, extracted, status]) row.insertCell().textContent = text;
-  row.lastElementChild.className = "field-status";
+  for (const value of [reference, extracted]) {
+    const isolatedValue = document.createElement("bdi");
+    isolatedValue.textContent = value;
+    row.insertCell().append(isolatedValue);
+  }
+  const statusCell = row.insertCell();
+  statusCell.textContent = status;
+  statusCell.className = "field-status";
   return row;
 }
 

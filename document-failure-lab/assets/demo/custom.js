@@ -1,4 +1,5 @@
 import { createVariants, openInvoice, pngBlob } from "./images.js";
+import { recognizeVariants } from "./ocr.js";
 import { compareResults } from "./results.js";
 import { activateTabs, renderViewer } from "./viewer.js";
 
@@ -24,6 +25,10 @@ const edges = ["left", "top", "right", "bottom"].map((name) => form.elements.nam
 const generate = element("generate");
 const generationError = element("generation-error");
 const generationStatus = element("generation-status");
+const extract = element("extract");
+const ocrProgress = element("ocr-progress");
+const ocrStatus = element("ocr-status");
+const ocrError = element("ocr-error");
 const resultsFile = element("results-file");
 const resultsStatus = element("results-status");
 const comparisonNote = element("comparison-note");
@@ -101,6 +106,12 @@ function saveEdges() {
   return true;
 }
 
+function clearOcrFeedback() {
+  ocrError.hidden = true;
+  ocrError.textContent = "";
+  ocrStatus.textContent = "";
+}
+
 function clearRun() {
   if (!run) return;
   for (const variant of Object.values(run)) URL.revokeObjectURL(variant.image);
@@ -111,6 +122,7 @@ function clearRun() {
   element("import-section").hidden = true;
   resultsFile.value = "";
   resultsStatus.textContent = "";
+  clearOcrFeedback();
   showError(resultsFile, "");
 }
 
@@ -225,7 +237,7 @@ form.addEventListener("submit", async (event) => {
     clearRun();
     run = Object.fromEntries(Object.entries(images).map(([id, { blob, size }]) => {
       const [title, note, alt] = labels[id];
-      return [id, { title, note, alt, size, image: URL.createObjectURL(blob), download: id + ".png" }];
+      return [id, { title, note, alt, size, blob, image: URL.createObjectURL(blob), download: id + ".png" }];
     }));
     renderViewer(run);
     resetTabs();
@@ -265,6 +277,7 @@ resultsFile.addEventListener("change", async () => {
 
     const comparison = compareResults(data, data?.fields);
     renderViewer(run, comparison);
+    clearOcrFeedback();
     const sourceLabel = comparison.source === "simulated" ? "Simulated results" : "Imported results";
     const reference = comparison.kind === "expected" ? "compared with expected values"
       : comparison.hasClean ? "compared with clean results" : "clean results unavailable";
@@ -275,5 +288,57 @@ resultsFile.addEventListener("change", async () => {
   } finally {
     resultsFile.disabled = false;
     if (restoreFocus && document.activeElement === document.body) resultsFile.focus();
+  }
+});
+
+extract.addEventListener("click", async () => {
+  if (!run || generate.disabled || resultsFile.disabled) return;
+  clearOcrFeedback();
+  if (edited) {
+    ocrError.hidden = false;
+    ocrError.textContent = "Generate the new images before extracting fields.";
+    return;
+  }
+
+  const restoreFocus = document.activeElement === extract;
+  const controls = [invoiceFile, generate, radios, coordinateFieldset, resultsFile, extract];
+  for (const control of controls) control.disabled = true;
+  ocrProgress.removeAttribute("value");
+  ocrProgress.hidden = false;
+  ocrStatus.textContent = "Loading the local OCR engine…";
+
+  try {
+    let completed = 0;
+    const data = await recognizeVariants(run, {
+      onStep: (id) => {
+        ocrProgress.value = completed;
+        ocrStatus.textContent = "Reading image " + (completed + 1) + " of 4 · " + labels[id][0];
+      },
+      onComplete: () => { ocrProgress.value = ++completed; },
+    });
+    const comparison = compareResults(data);
+    renderViewer(run, comparison);
+    resultsStatus.textContent = "";
+    resultsFile.value = "";
+    showError(resultsFile, "");
+    const hasValues = (fields) => Object.values(fields).some((value) => value !== null);
+    const hasBaseline = hasValues(data.variants.clean);
+    comparisonNote.textContent = hasBaseline
+      ? "Local OCR · compared with clean results" : "Local OCR · no readable fields on Clean";
+    if (hasBaseline) ocrStatus.textContent = "Extraction complete. Select a version to review the comparison.";
+    else if (Object.values(data.variants).some(hasValues)) {
+      ocrStatus.textContent = "Extraction complete. Clean returned no fields to compare against.";
+    } else {
+      ocrStatus.textContent = "OCR could not read the fields in these images. Try a clearer invoice.";
+    }
+  } catch (error) {
+    console.error(error);
+    ocrStatus.textContent = "";
+    ocrError.hidden = false;
+    ocrError.textContent = "OCR could not finish. Try again or import results from another extractor.";
+  } finally {
+    ocrProgress.hidden = true;
+    for (const control of controls) control.disabled = false;
+    if (restoreFocus && document.activeElement === document.body) extract.focus();
   }
 });

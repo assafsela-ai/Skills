@@ -161,3 +161,10 @@
 .json-format { margin-block-start: 0.85rem; }
 .json-format summary, .coordinate-options summary { cursor: pointer; font-weight: 650; }
 .json-format pre { overflow: auto; padding: 0.85rem; background: var(--canvas); }
+
+#ocr-progress {
+  accent-color: var(--accent);
+  inline-size: min(100%, 14rem);
+}
+
+#ocr-status { margin-block-start: 0.4rem; }

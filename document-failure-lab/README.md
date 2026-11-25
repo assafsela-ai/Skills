@@ -15,13 +15,16 @@ Find which invoice fields break when the image changes. Start with one synthetic
 
 [Open the invoice workspace](https://assafsela-ai.github.io/Skills/document-failure-lab/your-invoice.html). It processes files locally and needs no installation or API key.
 
-1. Choose a PNG or JPEG, up to 20 MB. Adjust the stamp and blur areas by dragging on the preview or entering their edges. Large images are resized to a longest side of 2,800 pixels before generation.
-2. Generate the four PNGs and download them from the Clean, Stamp, Tilt and Blur tabs. Run them through the same extractor with the same settings.
-3. Fill in the [browser results template](assets/demo/results-template.json). Import the JSON in the workspace. Omit a variant or use `null` if it was skipped. Use `null` or omit a field if a tested variant did not return it.
+1. Choose a PNG or JPEG, up to 20 MB. Adjust the stamp and blur areas, then generate the four images. Large images are resized to a longest side of 2,800 pixels.
+2. Select **Extract all four images**. Local OCR reads the invoice number, invoice date, supplier, subtotal and total in English and Hebrew. The app downloads its OCR assets on first use. The invoice and the extracted text stay in the browser.
+3. Select any variant to see the OCR value from Clean beside the value from that image. Missing or changed values are highlighted when OCR read a reference value on Clean. Extraction depends on image quality and recognizable field labels. Check the Clean values before interpreting differences.
 
-By default, the Clean results are the reference. Changed or missing values are flagged when a Clean value exists for that field. Text is compared after trimming whitespace. Keep values in the same JSON type across variants. This mode shows differences from Clean.
+To test a different extractor, expand **Import results from another extractor**. Download the PNGs and run them with the same settings. Fill in the [browser results template](assets/demo/results-template.json) and import it. Omit a variant or use `null` if it was skipped. Use `null` or omit a field if a tested variant did not return it.
 
-For a check against known values, include a top-level `fields` object in the results file. For example, add `"fields": {"total_amount": {"type": "amount", "expected": "125.40"}}`. The browser compares the declared fields with their expected values. Use decimal strings for amounts and use `"type": "text"` for text values. The browser accepts a results file of up to 1 MB with up to 200 fields in the comparison.
+For a check against known values in an imported file, add a top-level `fields` object, for example `"fields": {"total_amount": {"type": "amount", "expected": "125.40"}}`. Use decimal strings for amounts. Use `"type": "text"` for text values. Imports support up to 1 MB and 200 comparison fields.
+
+The browser uses self-hosted [Tesseract OCR assets](assets/ocr/README.md). Run the field parser tests with Node.js 22 or later and `node --test document-failure-lab/tests/invoice-fields.test.mjs`.
+
 
 ## Install
 
