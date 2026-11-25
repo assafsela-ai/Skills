@@ -1,0 +1,15 @@
+{
+  "id": "SUB-EXPIRY-001",
+  "source": "example-ticket.md#account-record",
+  "input": {
+    "question": "When does my current subscription expire? Reply with one date in YYYY-MM-DD format.",
+    "account": {
+      "last_billed_at": "2026-05-18",
+      "expires_at": "2026-06-18"
+    }
+  },
+  "expected": {
+    "exact_reply": "2026-06-18",
+    "source_field": "expires_at"
+  }
+}
