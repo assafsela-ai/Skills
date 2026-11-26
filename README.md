@@ -24,3 +24,11 @@ Switch between two HR policy versions to see how a 30-day onboarding plan change
 - [Audit an HR Policy](audit-hr-policy/) compares policy versions and links each change to its source clauses and affected onboarding tasks.
 - [Build an Onboarding Plan](build-onboarding-plan/) turns an applicable policy and a role brief into a plan with owners, dates, and sources.
 - [Review Onboarding Feedback](review-onboarding-feedback/) uses survey responses or interview notes to propose changes for the plan owner to review.
+
+## AP Payment Review
+
+Review a fictional supplier invoice with a quantity mismatch and new bank details that still need verification. [Live demo](https://assafsela-ai.github.io/ap-payment-review/) · [GitHub repository](https://github.com/assafsela-ai/ap-payment-review)
+
+- [Review an invoice exception](review-invoice-exception/) compares billed quantities and prices with the purchase order and goods receipts.
+- [Review a vendor bank change](review-vendor-change/) compares the requested account with the vendor record and checks for independent verification.
+- [Assemble a payment evidence pack](assemble-payment-evidence/) records the review decision, open checks, next steps, and source documents.
