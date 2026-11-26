@@ -16,3 +16,11 @@ Reusable skills for Codex, Claude, and other tools that support Agent Skills.
 - [Time Zone Replay](time-zone-replay/) turns time-sensitive rules into test cases for daylight saving changes, cutoffs, and overnight windows.
 - [Agent Side-Effect Diff](agent-side-effect-diff/) compares what two agent runs changed and flags unexpected writes, even when the replies match.
 - [Vision Data Audit](vision-data-audit/) checks image datasets for overlap between splits, prediction changes after background swaps, and training labels worth reviewing.
+
+## People Onboarding Lab
+
+Switch between two HR policy versions to see how a 30-day onboarding plan changes. [Open the People Onboarding Lab demo](https://assafsela-ai.github.io/people-onboarding-lab/).
+
+- [Audit an HR Policy](audit-hr-policy/) compares policy versions and links each change to its source clauses and affected onboarding tasks.
+- [Build an Onboarding Plan](build-onboarding-plan/) turns an applicable policy and a role brief into a plan with owners, dates, and sources.
+- [Review Onboarding Feedback](review-onboarding-feedback/) uses survey responses or interview notes to propose changes for the plan owner to review.
