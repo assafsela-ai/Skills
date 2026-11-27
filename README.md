@@ -33,3 +33,10 @@ Review a fictional supplier invoice with a quantity mismatch and new bank detail
 - [Review an invoice exception](review-invoice-exception/) compares billed quantities and prices with the purchase order and goods receipts.
 - [Review a vendor bank change](review-vendor-change/) compares the requested account with the vendor record and checks for independent verification.
 - [Assemble a payment evidence pack](assemble-payment-evidence/) records the review decision, open checks, next steps, and source documents.
+
+## Release Reliability Lab
+
+Rehearse two PostgreSQL rollback paths and compare the database checks. [Interactive demo](https://assafsela-ai.github.io/release-reliability-lab/) · [GitHub repository](https://github.com/assafsela-ai/release-reliability-lab)
+
+- [Diagnose CI Failure](diagnose-ci-failure/) identifies the first causal error and proposes the smallest verification step.
+- [Review Rollback Readiness](review-rollback-readiness/) checks if the previous version can still read and write after a schema or configuration change.
